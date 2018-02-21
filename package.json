@@ -8,11 +8,12 @@
   "scripts": {
     "build": "babel src -d build",
     "lint": "./node_modules/.bin/eslint src/**",
-    "start": "NODE_ENV=production node --harmony src/server.js",
-    "start-dev": "NODE_ENV=development node --inspect --harmony src/server.js",
-    "test": "./node_modules/mocha/bin/mocha ./src/**/*tests.js"
+    "start": "npm run build && NODE_ENV=production node --harmony build/server.js",
+    "start-dev": "npm run build && NODE_ENV=development node --inspect --harmony build/server.js",
+    "test": "npm run build && ./node_modules/mocha/bin/mocha ./build/**/*tests.js"
   },
   "dependencies": {
+    "auto-bind": "^1.2.0",
     "cabin": "^1.0.0",
     "jsonwebtoken": "^8.1.1",
     "koa": "^2.5.0",

@@ -4,6 +4,8 @@ import {
 	postLogin
 } from "./controllers";
 
+const router = new Router();
+
 router.post("/login", postLogin);
 
-const router = new Router();
+export default router.routes();

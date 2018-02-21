@@ -4,6 +4,8 @@ import {
 	postPatch
 } from "./controllers";
 
+const router = new Router();
+
 router.post("/json-patch", postPatch);
 
-const router = new Router();
+export default router.routes();

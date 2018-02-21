@@ -3,12 +3,12 @@
 // } from 'chai'
 import supertest from "supertest";
 
-import config from "./config";
+import config from "../config";
 
 describe("route: /login", () => {
 	let request;
 	before(() => {
-		request = supertest(app.listen(config.server.port));
+		request = supertest(app.listen(config.server.port, config.server.host));
 	});
 
 	describe("post", () => {

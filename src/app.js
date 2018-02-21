@@ -1,6 +1,7 @@
 import Koa from "koa";
 import bodyparser from "koa-bodyparser";
 import Cabin from "cabin";
+import jwt from "koa-jwt";
 import Router from "koa-router";
 
 import routes from "./routes";
