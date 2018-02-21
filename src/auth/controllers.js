@@ -1,13 +1,20 @@
 import jwt from "jsonwebtoken";
 
 export const postLogin = ctx => {
-	const {
-		password,
-		username
-	} = ctx.request.body;
+  let {
+    password,
+    username
+  } = ctx.request.body;
 
-	ctx.body = jwt.sign({
-		password,
-		username
-	});
+  password = password.trim();
+  username = username.trim();
+
+  if (password && username) {
+    ctx.body = jwt.sign({
+      password,
+      username
+    });
+  } else {
+    ctx.status = 400;
+  }
 };
