@@ -1,18 +1,17 @@
 import assert from "assert";
 import supertest from "supertest";
 
-import app from "../app";
 import config from "../config";
+import server from "../server";
 
 describe("route: /v1/login", () => {
-  after(done => {
-    app.close();
-    done();
-  });
-
-  const request = supertest.agent(app.listen());
+  const request = supertest(server);
 
   describe("post", () => {
+    afterEach(() => {
+      server.close();
+    });
+
     it("should return JSON", () => {
       request
         .post("/v1/login")
@@ -29,8 +28,8 @@ describe("route: /v1/login", () => {
         });
     });
 
-    it("rejects empty username", (done) => {
-      request
+    it("rejects empty username", async (done) => {
+      await request
         .post("/v1/login")
         .send({
           username: "        \n       \t \s  ",

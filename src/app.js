@@ -4,6 +4,7 @@ import Cabin from "cabin";
 import jwt from "koa-jwt";
 import Router from "koa-router";
 
+import config from "./config";
 import routes from "./routes";
 
 const app = new Koa();
@@ -12,7 +13,7 @@ const cabin = new Cabin();
 app.use(cabin.middleware);
 
 app.use(jwt({
-    secret: "pa$$word"
+    secret: config.jwtSecret
   })
   .unless({
     path: [/^\/v1\/login$/]
