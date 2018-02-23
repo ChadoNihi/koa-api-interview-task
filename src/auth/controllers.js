@@ -6,15 +6,26 @@ export const postLogin = ctx => {
     username
   } = ctx.request.body;
 
-  password = password.trim();
-  username = username.trim();
+  try {
+    password = password.trim();
+    username = username.trim();
+  } catch (e) {
+    ctx.log("warn", e);
+    ctx.throw(400);
+  }
 
   if (password && username) {
-    ctx.body = jwt.sign({
-      password,
-      username
-    });
+    ctx.body = {
+      token: jwt.sign({
+        password,
+        username
+      }),
+      msg: "Successful Authentication"
+    };
   } else {
-    ctx.status = 400;
+    const errMsg = "Password or username cannot be empty.";
+    ctx.throw(400, errMsg, {
+      msg: errMsg
+    });
   }
 };

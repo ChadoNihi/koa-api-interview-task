@@ -12,11 +12,11 @@ const cabin = new Cabin();
 app.use(cabin.middleware);
 
 app.use(jwt({
-	secret: "pa$$word"
-})
-	.unless({
-		path: [/^\/login$/]
-	}));
+    secret: "pa$$word"
+  })
+  .unless({
+    path: [/^\/v1\/login$/]
+  }));
 app.use(routes.routes());
 app.use(routes.allowedMethods());
 

@@ -1,21 +1,21 @@
-// import {
-//   assert
-// } from 'chai'
+import assert from "assert";
 import supertest from "supertest";
 
 import app from "../app";
 import config from "../config";
 
-describe("route: /login", () => {
-  let request;
-  before(() => {
-    request = supertest(app.listen(config.server.port, config.server.host));
+describe("route: /v1/login", () => {
+  after(done => {
+    app.close();
+    done();
   });
+
+  const request = supertest.agent(app.listen());
 
   describe("post", () => {
     it("should return JSON", () => {
       request
-        .post('/login')
+        .post("/v1/login")
         .send({
           username: "UserX",
           password: "123xyz123xyz123xyz"
@@ -23,34 +23,37 @@ describe("route: /login", () => {
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
-        .expect(200);
+        .expect(200)
+        .then(res => {
+          assert("token" in res.body);
+        });
     });
 
-    it("rejects empty username", () => {
+    it("rejects empty username", (done) => {
       request
-        .post('/login')
+        .post("/v1/login")
         .send({
           username: "        \n       \t \s  ",
           password: "123xyz123xyz123xyz"
         })
         .set("Accept", "application/json")
-        .expect(400);
+        .expect(400, done);
     });
 
-    it("rejects empty passsword", () => {
+    it("rejects empty passsword", (done) => {
       request
-        .post('/login')
+        .post("/v1/login")
         .send({
           username: "Altruisto",
           password: "   \n   \t \s "
         })
         .set("Accept", "application/json")
-        .expect(400);
+        .expect(400, done);
     });
 
     it("ignores additional fields", () => {
       request
-        .post('/login')
+        .post("/v1/login")
         .send({
           username: "Altruisto",
           password: "123",
@@ -59,7 +62,10 @@ describe("route: /login", () => {
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
-        .expect(200);
+        .expect(200)
+        .then(res => {
+          assert("token" in res.body);
+        });
     });
   });
 });

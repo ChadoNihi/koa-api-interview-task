@@ -1,15 +1,15 @@
 import Router from "koa-router";
 
-import authR from "./auth/router";
-import jsonR from "./json_patching/router";
-// import thumbR from './thumbnail/router'
+import authRouter from "./auth/router";
+import jsonRouter from "./json_patching/router";
+import thumbRouter from "./thumbnail/router";
 
 const router = new Router();
 const api = new Router();
 
-api.use(authR);
-api.use(jsonR);
-// api.use(thumbR)
+api.use(authRouter);
+api.use(jsonRouter);
+api.use(thumbRouter);
 
 router.use("/", api.routes());
 
