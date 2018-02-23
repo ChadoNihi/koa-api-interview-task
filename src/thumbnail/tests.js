@@ -3,13 +3,17 @@
 // } from 'chai'
 import supertest from "supertest";
 
-import app from "../app";
 import config from "../config";
+import server from "../server";
 
 describe("route: /v1/thumbnail", () => {
-  const request = supertest.agent(app.listen());
+  const request = supertest(server);
 
   describe("get", () => {
+    afterEach(() => {
+      server.close();
+    });
+
     it("should be unauthorized", (done) => {
       request
         .get("/v1/thumbnail?src=https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#/media/File:404_error_sample.png")

@@ -28,18 +28,20 @@ describe("route: /v1/login", () => {
         });
     });
 
-    it("rejects empty username", async (done) => {
-      await request
+    it("rejects empty username", () => {
+      request
         .post("/v1/login")
         .send({
           username: "        \n       \t \s  ",
           password: "123xyz123xyz123xyz"
         })
         .set("Accept", "application/json")
-        .expect(400, done);
+        .then(res => {
+          assert(res.status === 400);
+        });
     });
 
-    it("rejects empty passsword", (done) => {
+    it("rejects empty passsword", () => {
       request
         .post("/v1/login")
         .send({
@@ -47,7 +49,9 @@ describe("route: /v1/login", () => {
           password: "   \n   \t \s "
         })
         .set("Accept", "application/json")
-        .expect(400, done);
+        .then(res => {
+          assert(res.status === 400);
+        });
     });
 
     it("ignores additional fields", () => {

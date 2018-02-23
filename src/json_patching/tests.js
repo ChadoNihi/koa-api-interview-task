@@ -1,16 +1,17 @@
-// import {
-//   assert
-// } from 'chai'
-// import jwt from "jsonwebtoken";
+import assert from "assert";
 import supertest from "supertest";
 
-import app from "../app";
 import config from "../config";
+import server from "../server";
 
 describe("route: /v1/json-patch", () => {
-  const request = supertest.agent(app.listen());
+  const request = supertest(server);
 
   describe("post", () => {
+    afterEach(() => {
+      server.close();
+    });
+
     it("should be unauthorized", (done) => {
       request
         .post("/v1/json-patch")
@@ -36,7 +37,7 @@ describe("route: /v1/json-patch", () => {
         token = res.body.token;
       });
 
-    it("should return an updated JSON document", (done) => {
+    it("should return an updated JSON document", () => {
       request
         .post("/v1/json-patch")
         .set('Authorization', `Bearer ${token}`)
@@ -65,12 +66,15 @@ describe("route: /v1/json-patch", () => {
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
-        .expect(200, {
+        .expect({
           result: {
             "baz": "boo",
             "hello": ["world"]
           }
-        }, done);
+        })
+        .then(res => {
+          assert(res.status === 200);
+        });
     });
   });
 });
