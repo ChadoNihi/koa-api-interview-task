@@ -1,7 +1,7 @@
 import Router from "koa-router";
 
 import {
-  postPatch
+	postPatch
 } from "./controllers";
 
 const router = new Router();

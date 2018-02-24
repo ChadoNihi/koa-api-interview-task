@@ -1,7 +1,7 @@
 import Router from "koa-router";
 
 import {
-  getThumb
+	getThumb
 } from "./controllers";
 
 const router = new Router();

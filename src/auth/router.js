@@ -1,7 +1,7 @@
 import Router from "koa-router";
 
 import {
-  postLogin
+	postLogin
 } from "./controllers";
 
 const router = new Router();
