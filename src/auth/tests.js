@@ -12,8 +12,8 @@ describe("route: /v1/login", () => {
       server.close();
     });
 
-    it("should return JSON", () => {
-      request
+    it("should return JSON", async () => {
+      await request
         .post("/v1/login")
         .send({
           username: "UserX",
@@ -23,39 +23,35 @@ describe("route: /v1/login", () => {
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
-        .then(res => {
+        .expect(res => {
           assert("token" in res.body);
         });
     });
 
-    it("rejects empty username", () => {
-      request
+    it("rejects empty username", async () => {
+      await request
         .post("/v1/login")
         .send({
-          username: "        \n       \t \s  ",
+          username: "        \n       \t  ",
           password: "123xyz123xyz123xyz"
         })
         .set("Accept", "application/json")
-        .then(res => {
-          assert(res.status === 400);
-        });
+        .expect(400);
     });
 
-    it("rejects empty passsword", () => {
-      request
+    it("rejects empty passsword", async () => {
+      await request
         .post("/v1/login")
         .send({
           username: "Altruisto",
-          password: "   \n   \t \s "
+          password: "   \n   \t  "
         })
         .set("Accept", "application/json")
-        .then(res => {
-          assert(res.status === 400);
-        });
+        .expect(400);
     });
 
-    it("ignores additional fields", () => {
-      request
+    it("ignores additional fields", async () => {
+      await request
         .post("/v1/login")
         .send({
           username: "Altruisto",
@@ -66,7 +62,7 @@ describe("route: /v1/login", () => {
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
-        .then(res => {
+        .expect(res => {
           assert("token" in res.body);
         });
     });

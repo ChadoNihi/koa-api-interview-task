@@ -1,7 +1,7 @@
 import Router from "koa-router";
 
 import {
-	getThumb
+  getThumb
 } from "./controllers";
 
 const router = new Router();
@@ -10,4 +10,4 @@ router.prefix("/v1");
 
 router.get("/thumbnail", getThumb);
 
-export default router.routes();
+export default router;

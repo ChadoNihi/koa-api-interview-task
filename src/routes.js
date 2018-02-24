@@ -1,16 +1,13 @@
-import Router from "koa-router";
-
 import authRouter from "./auth/router";
 import jsonRouter from "./json_patching/router";
 import thumbRouter from "./thumbnail/router";
 
-const router = new Router();
-const api = new Router();
+const routers = [authRouter, jsonRouter, thumbRouter];
 
-api.use(authRouter);
-api.use(jsonRouter);
-api.use(thumbRouter);
-
-router.use("/", api.routes());
-
-export default router;
+export default app => {
+  routers.forEach((router) => {
+    app
+      .use(router.routes())
+      .use(router.allowedMethods());
+  });
+}

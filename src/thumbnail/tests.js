@@ -5,6 +5,9 @@ import supertest from "supertest";
 
 import config from "../config";
 import server from "../server";
+import {
+  getWidthHeightFromResolutionStr
+} from './helpers'
 
 describe("route: /v1/thumbnail", () => {
   const request = supertest(server);
@@ -28,19 +31,37 @@ describe("route: /v1/thumbnail", () => {
         username: 'test',
         password: 'test'
       })
-      .then(resp => {
+      .then(res => {
         token = res.body.token;
       });
 
+    it('should return a thumbnail image of the default size', async () => {
+      await request
+        .get(`/v1/thumbnail?src=${encodeURIComponent("./test-img.png")}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .expect(res => {
+          const {
+            width,
+            height
+          } = res.body;
+          const [defaultW, defaultH] = getWidthHeightFromResolutionStr(config.defaultResolution)
+
+          assert(width === defaultW);
+          assert(height === defaultH);
+        });
+    });
+
     const reErr = /error/i;
 
-    it("should return an error on corrupt src", () => {
-      request
+    it("should return an error on corrupt src", async () => {
+      await request
         .get("/v1/thumbnail?src=999999")
+        .set('Authorization', `Bearer ${token}`)
         .expect("Content-Type", /json/)
         .expect(400)
-        .then(resp => {
-          assert(reErr.test(resp.body));
+        .expect(res => {
+          assert(reErr.test(res.body));
         });
     });
   });

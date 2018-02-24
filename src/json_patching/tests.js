@@ -12,8 +12,8 @@ describe("route: /v1/json-patch", () => {
       server.close();
     });
 
-    it("should be unauthorized", (done) => {
-      request
+    it("should be unauthorized", async () => {
+      await request
         .post("/v1/json-patch")
         .send({
           target: {
@@ -22,7 +22,7 @@ describe("route: /v1/json-patch", () => {
         })
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
-        .expect(401, done);
+        .expect(401);
     });
 
     let token;
@@ -33,12 +33,12 @@ describe("route: /v1/json-patch", () => {
         username: 'test',
         password: 'test'
       })
-      .then(resp => {
+      .expect(res => {
         token = res.body.token;
       });
 
-    it("should return an updated JSON document", () => {
-      request
+    it("should return an updated JSON document", async () => {
+      await request
         .post("/v1/json-patch")
         .set('Authorization', `Bearer ${token}`)
         // data from http://jsonpatch.com/#simple-example
@@ -72,9 +72,7 @@ describe("route: /v1/json-patch", () => {
             "hello": ["world"]
           }
         })
-        .then(res => {
-          assert(res.status === 200);
-        });
+        .expect(200);
     });
   });
 });

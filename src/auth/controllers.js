@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 
-export const postLogin = ctx => {
+import config from "../config";
+
+export const postLogin = async (ctx) => {
   let {
     password,
     username
@@ -19,7 +21,7 @@ export const postLogin = ctx => {
       token: jwt.sign({
         password,
         username
-      }),
+      }, config.jwtSecret),
       msg: "Successful Authentication"
     };
   } else {

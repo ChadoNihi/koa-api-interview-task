@@ -1,24 +1,29 @@
 import Koa from "koa";
-import bodyparser from "koa-bodyparser";
+import bodyParser from "koa-bodyparser";
 import Cabin from "cabin";
-import jwt from "koa-jwt";
-import Router from "koa-router";
+import compress from 'koa-compress'
+import helmet from 'koa-helmet'
+import koaJwt from "koa-jwt";
 
 import config from "./config";
-import routes from "./routes";
+import setRoutes from "./routes";
 
 const app = new Koa();
 
 const cabin = new Cabin();
 app.use(cabin.middleware);
 
-app.use(jwt({
+app.use(helmet());
+app.use(compress());
+app.use(bodyParser());
+app.use(koaJwt({
     secret: config.jwtSecret
   })
   .unless({
     path: [/^\/v1\/login$/]
-  }));
-app.use(routes.routes());
-app.use(routes.allowedMethods());
+  })
+);
+
+setRoutes(app);
 
 export default app;
