@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src -d build",
+    "cover": "npm run build && ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --timeout 10000 ./build/**/*tests.js",
     "lint": "./node_modules/.bin/eslint src/**",
     "start": "npm run build && NODE_ENV=production node --harmony build/server.js",
     "start-dev": "npm run build && NODE_ENV=development node --inspect --harmony build/server.js",
