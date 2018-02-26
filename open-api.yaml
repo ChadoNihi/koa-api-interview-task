@@ -1,0 +1,105 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Koa API example
+  description: A sample API for one interview assignment
+  contact:
+    name: Alexandr Shchelov
+    url: https://eahub.org/user/chado-nihi
+servers:
+  - url: http://0.0.0.0:3000/v1
+paths:
+  /login:
+    post:
+      description: Creates and return JSON Web Token given a username and password
+      requestBody:
+        description: Username and password
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInfo'
+      responses:
+        '200':
+          description: token response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWToken'
+  /json-patch:
+    post:
+      description: Patches a provided JSON document with a provided JSON patch
+      requestBody:
+        description: Target JSON document and patch
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JSONPatchRequest'
+      responses:
+        '200':
+          description: patched document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSONPatchResult'
+  /thumbnail:
+    get:
+      description: Generates a thumbnail of an image from a provided URL
+      parameters:
+        - name: src
+          in: query
+          description: img url
+          required: true
+          schema:
+            type: string
+        - name: dims
+          in: query
+          description: resolution string like "50x50"
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: thumbnail response
+          content:
+            image/*:
+              schema:
+               type: string
+               format: binary
+components:
+  schemas:
+    LoginInfo:
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    JSONPatchRequest:
+      required:
+        - target
+        - patch
+      properties:
+        target:
+          type: object
+        patch:
+          oneOf:
+            - type: object
+            - type: array
+    JWToken:
+      required:
+        - token
+      properties:
+        token:
+          type:
+            - string
+    JSONPatchResult:
+      required:
+        - result
+      properties:
+        result:
+          type:
+            - object
