@@ -53,3 +53,4 @@ Run tests with `yarn test` (or `npm test`). `yarn cover` (or `npm run cover`) ru
 
 ## Misc.
 Lint the code with `yarn lint --fix` (or `npm run lint --fix`).
+Run the app with PM2 with `yarn pm2` (or `npm run pm2`). (To kill the process enter `yarn pm2-kill` (or `npm run pm2-kill`).)
