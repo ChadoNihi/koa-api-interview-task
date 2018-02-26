@@ -24,7 +24,7 @@ export const postPatch = async (ctx) => {
 				)
 			};
 		} catch (e) {
-			ctx.log("warn", e);
+			ctx.log.info(e);
 			ctx.throw(400);
 		}
 	}

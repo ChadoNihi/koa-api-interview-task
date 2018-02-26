@@ -14,7 +14,7 @@ export const getThumb = async (ctx) => {
 		try {
 			var imgSrc = decodeURIComponent(encodedImgSrc);
 		} catch (e) {
-			ctx.log("warn", e);
+			ctx.log.info(e);
 			ctx.throw(400, "Error: malformed URL in the \"src\" query parameter.");
 		}
 
@@ -25,7 +25,7 @@ export const getThumb = async (ctx) => {
 				throw Error("Thumbnail should be small.");
 			}
 		} catch (e) {
-			ctx.log("warn", e);
+			ctx.log.info(e);
 			ctx.throw(
 				400,
 				`Error: expected the query param "dims" to be like the default "50x50" (maximum "${config.thumbnailService.maxW}x${config.thumbnailService.maxH}"), got "${resolution}".`
@@ -46,7 +46,7 @@ export const getThumb = async (ctx) => {
 					});
 			})
 			.catch(err => {
-				ctx.log("warn", err);
+				ctx.log.warn(err);
 				ctx.throw(500, `Error: cannot get the image from "${imgSrc}".`);
 			});
 	} else {

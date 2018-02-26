@@ -12,7 +12,7 @@ export const postLogin = async (ctx) => {
 		password = password.trim();
 		username = username.trim();
 	} catch (e) {
-		ctx.log("warn", e);
+		ctx.log.info(e);
 		ctx.throw(400);
 	}
 
