@@ -17,10 +17,11 @@ A Koa API back end for one interview assignment.
 ###### Response example
 ```
 {
-  "token": "someJWT"
+  "token": "someJWT",
+  "msg": "Successful Authentication"
 }
 ```
-#### POST /v1/json-patch
+#### POST /v1/json-patch (requires the login token in Authorization: Bearer)
 ###### Request example
 ```
 {
@@ -44,7 +45,7 @@ A Koa API back end for one interview assignment.
   }
 }
 ```
-#### GET /v1/thumbnail?src=<img_url>[&dims=60x60]
+#### GET /v1/thumbnail?src=<img_url>[&dims=60x60] (requires the login token in Authorization: Bearer)
 Returns a "thumbnail" of an image from the provided URL.
 
 ## Tests

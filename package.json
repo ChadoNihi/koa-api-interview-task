@@ -9,6 +9,7 @@
     "build": "babel src -d build",
     "cover": "npm run build && ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --timeout 10000 ./build/**/*tests.js",
     "lint": "./node_modules/.bin/eslint src/**",
+    "pm2": "npm run build && ./node_modules/pm2/bin/pm2 start build/server.js"
     "start": "npm run build && NODE_ENV=production node --harmony build/server.js",
     "start-dev": "npm run build && NODE_ENV=development node --inspect --harmony build/server.js",
     "test": "npm run build && ./node_modules/mocha/bin/mocha --timeout 10000 ./build/**/*tests.js"
@@ -25,6 +26,7 @@
     "koa-jwt": "^3.3.0",
     "koa-router": "^7.4.0",
     "koa-static": "^4.0.2",
+    "pm2": "^2.10.1",
     "request": "^2.83.0",
     "sharp": "^0.19.0"
   },

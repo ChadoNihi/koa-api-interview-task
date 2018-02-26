@@ -70,6 +70,7 @@ paths:
 components:
   schemas:
     LoginInfo:
+      type: object
       required:
         - username
         - password
@@ -81,7 +82,6 @@ components:
     JSONPatchRequest:
       required:
         - target
-        - patch
       properties:
         target:
           type: object
@@ -90,16 +90,18 @@ components:
             - type: object
             - type: array
     JWToken:
+      type: object
       required:
         - token
       properties:
         token:
-          type:
-            - string
+          type: string
+        msg:
+          type: string
     JSONPatchResult:
+      type: object
       required:
         - result
       properties:
         result:
-          type:
-            - object
+          type: object
