@@ -7,8 +7,8 @@ const config = Object.freeze({
 	},
 	thumbnailService: {
 		defaultResolution: "50x50",
-		maxW: 500,
-		maxH: 500
+		maxThumbW: 500,
+		maxThumbH: 500
 	},
 	test: {
 		imgUrl: "https://upload.wikimedia.org/wikipedia/commons/f/f5/Elephants_at_bath_Sri_Lanka.jpg"

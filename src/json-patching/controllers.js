@@ -9,7 +9,7 @@ export const postPatch = async (ctx) => {
     target
   } = ctx.request.body;
 
-  // if falsy or {}
+  // if no patch (it's falsy or {}), return unaltered doc
   if (!patch || (Object.keys(patch).length === 0 && patch.constructor === Object)) {
     ctx.body = {
       result: target

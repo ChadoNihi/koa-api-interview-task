@@ -4,10 +4,11 @@ import thumbRouter from "./thumbnail/router";
 
 const routers = [authRouter, jsonRouter, thumbRouter];
 
+// set routes
 export default app => {
-	routers.forEach((router) => {
-		app
-			.use(router.routes())
-			.use(router.allowedMethods());
-	});
+  routers.forEach((router) => {
+    app
+      .use(router.routes())
+      .use(router.allowedMethods());
+  });
 };
